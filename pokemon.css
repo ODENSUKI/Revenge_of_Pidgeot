@@ -1,0 +1,66 @@
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+/* .arasuji1 {
+    text-align: center;
+    animation-name:fadeUpAnime;
+    animation-duration:0.5s;
+    animation-fill-mode:forwards;
+    opacity:0;
+    }
+
+@keyframes fadeUpAnime{
+  from {
+    opacity: 0;
+  transform: translateY(100px);
+  }
+
+  to {
+    opacity: 1;
+  transform: translateY(0);
+  }
+}
+
+.arasuji2 {
+    text-align: center;
+    font-weight: bold;
+}
+
+.arasuji3 {
+    text-align: center;
+    /* font-weight: bold; */
+/* } */ */
+
+#start_button {
+   text-align: right;
+}
+
+.arasuji{
+    text-align: center;
+}
+
+.arasuji2{
+    font-weight: bold;
+}
+
+.display_battle_button{
+    display: none;
+    text-align: center;
+}
+
+.display_gamen{
+    /* position: relative; */
+    /* text-align: center; */
+    background-color: white;
+    margin:0 auto;
+    width: 40%;
+}
+
+.textfield{
+    color: grey;
+}
