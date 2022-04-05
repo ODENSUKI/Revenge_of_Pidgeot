@@ -55,8 +55,31 @@ const EndrollImage = new Image();
 EndrollImage.src = "images/Ending.png";
 EndrollImage.classList.add('Ending')
 
+//土の画像
+const SoilImage = new Image();
+SoilImage.src = "images/jimen.png";
+SoilImage.classList.add('Soil')
+
+//草の画像
+const GrassImage = new Image();
+GrassImage.src = "images/kusa.png";
+GrassImage.classList.add('Grass')
+
+//水の画像
+const WaterImage = new Image();
+WaterImage.src = "images/mizu.png";
+WaterImage.classList.add('Water')
+
+//ちいさいピジョット
+const smallPidgeotImage = new Image();
+smallPidgeotImage.src ="images/small_pidgeot.jpg"
+
+//ちいさいピカチュー
+const smallPikachuImage = new Image();
+smallPikachuImage.src = "images/small_pikachu.png"
+
 //イベントコントロール
-let countclickcanvas = 0;
+let countclickcanvas = -10000;
 let eventControl = 0
 function clickcanvas(){
     console.log('Click count', countclickcanvas)
@@ -168,9 +191,6 @@ function battle(){
         document.getElementsByClassName('battleField')[0].style.margin = 'auto'
         // document.getElementsByClassName('battleField')[0].style.left = '0' //中央寄せ
         // document.getElementsByClassName('battleField')[0].style.right = '0' //中央寄せ
-        const con = document.querySelector('canvas').getContext('2d')
-        con.drawImage(PigeotImage, 0, 100);
-        console.log('Pigeot Image Load!')
         const textField = document.createElement('canvas')
         textField.width = 600;
         textField.height = 100;
@@ -184,11 +204,26 @@ function battle(){
         // document.getElementsByClassName('textfield')[0].style.top = '1000'
         // document.getElementsByClassName('textfield')[0].style.bottom = '100' //下寄
         console.log('show textfield!')
+        //
+        //マップの表示
+        drawMap()
+
         battlecount ++;
+        window.alert('キャラはwsadキーで動かしてね！')
     }
     else if(battlecount > 0){
         window.alert('下の画像をクリックして遊んでね！')
     }
+    //関数の実行
+    const textField = document.getElementsByClassName('textfield')[0]
+    textField.addEventListener('click', clickcanvas)
+}
+
+//ピジョット登場
+function PidgeotCome(){
+    const con = document.querySelector('canvas').getContext('2d')
+    con.drawImage(PigeotImage, 0, 100);
+    console.log('Pigeot Image Load!')
 }
 
 //テキスト1
@@ -479,16 +514,89 @@ let EndingInterval = setInterval(function(){
     if(EndrollpositionY > 0){
         con.clearRect(0,0,600,340)
         EndrollpositionY --;
-        console.log('Move Y', EndrollpositionY);
-        console.log(EndrollImage.width)
-        console.log(EndrollImage.height)
         con.drawImage(EndrollImage, 0, EndrollpositionY);
-        console.log('Draw!')
     }else if(EndrollpositionY === 0){
         clearInterval(EndingInterval)
     }
 },10) //interval 間隔
 }
 
-//関数の実行
-canvas.addEventListener('click', clickcanvas)
+//フィールドの描画
+//mapの設定
+//土 = 1, 草 = 2, 水=3
+let mapcon = 
+[[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[2,2,2,2,2,2,2,2,2,2,2,2,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+[2,2,2,2,2,2,2,2,2,2,2,2,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],]
+let mapconX = mapcon.map(array => {
+    return array.map((number, index) => {
+        return 20*index
+    })
+})
+let mapconY = mapcon.map((array, index) => {
+    return array.map(number => {
+        return 20 * index
+    })
+})
+
+function drawMap(){
+    const con = document.querySelector('canvas').getContext('2d')
+    let smallPidgeX = 0;
+    let smallPidgeY = 140;
+    let drawMapInterval = setInterval(function(){
+    for(let [indexY,arrayX] of mapcon.entries()){
+        for(let [indexX,value] of arrayX.entries()){
+            //草を描画
+            if(value === 2){
+                con.drawImage(GrassImage,mapconX[indexY][indexX], mapconY[indexY][indexX])
+            }
+            //土を描画
+            if(value === 1){
+                con.drawImage(SoilImage,mapconX[indexY][indexX], mapconY[indexY][indexX])
+            }
+            //水を描画
+            if(value === 3){
+                con.drawImage(WaterImage,mapconX[indexY][indexX], mapconY[indexY][indexX])
+            }
+        }}
+    //ピジョットの描写
+    con.drawImage(smallPidgeotImage, smallPidgeX, smallPidgeY)
+    window.addEventListener('keyup', pidgeotmove)
+    function pidgeotmove(comand){
+        if(comand.key === 's'){
+            console.log('move down!')
+                smallPidgeY ++;}
+        if(comand.key === 'w'){
+            console.log('move up!')
+                smallPidgeY --;}
+        if(comand.key === 'd'){
+            console.log('move right!')
+                smallPidgeX ++;}
+        if(comand.key === 'a'){
+            console.log('move down!')
+                smallPidgeX --;}
+        }
+    //ピカチューの描写
+    let smallPikachuX = 500;
+    let smallPikachuY = 140;
+    con.drawImage(smallPikachuImage, smallPikachuX, smallPikachuY)
+    if(smallPidgeX + 40 >= 500){
+        clearInterval(drawMapInterval);
+        con.clearRect(0,0,640,300)
+        PidgeotCome();
+        countclickcanvas = 0;
+    }
+},100)
+}
