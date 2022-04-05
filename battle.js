@@ -207,6 +207,7 @@ function battle(){
         //
         //マップの表示
         drawMap()
+        movePidgeot()
 
         battlecount ++;
         window.alert('キャラはwsadキーで動かしてね！')
@@ -551,10 +552,38 @@ let mapconY = mapcon.map((array, index) => {
     })
 })
 
-function drawMap(){
-    const con = document.querySelector('canvas').getContext('2d')
     let smallPidgeX = 0;
     let smallPidgeY = 140;
+function movePidgeot(){
+    window.addEventListener('keyup', pidgeotmove)
+    function pidgeotmove(comand){
+        if(comand.key === 's'){
+            for(let n=0; n<=40; n++){
+            console.log('move down!')
+                smallPidgeY ++;}
+            }
+        if(comand.key === 'w'){
+            for(let n=0; n<=40; n++){
+            console.log('move up!')
+                smallPidgeY --;}
+            }
+        if(comand.key === 'd'){
+            for(let n=0; n<=40; n++){
+            console.log('move right!')
+                smallPidgeX ++;}
+            }
+        if(comand.key === 'a'){
+            for(let n=0; n<=40; n++){
+            console.log('move down!')
+                smallPidgeX --;}
+            }
+        }
+}
+
+function drawMap(){
+    const con = document.querySelector('canvas').getContext('2d')
+    // let smallPidgeX = 0;
+    // let smallPidgeY = 140;
     let drawMapInterval = setInterval(function(){
     for(let [indexY,arrayX] of mapcon.entries()){
         for(let [indexX,value] of arrayX.entries()){
@@ -573,21 +602,21 @@ function drawMap(){
         }}
     //ピジョットの描写
     con.drawImage(smallPidgeotImage, smallPidgeX, smallPidgeY)
-    window.addEventListener('keyup', pidgeotmove)
-    function pidgeotmove(comand){
-        if(comand.key === 's'){
-            console.log('move down!')
-                smallPidgeY ++;}
-        if(comand.key === 'w'){
-            console.log('move up!')
-                smallPidgeY --;}
-        if(comand.key === 'd'){
-            console.log('move right!')
-                smallPidgeX ++;}
-        if(comand.key === 'a'){
-            console.log('move down!')
-                smallPidgeX --;}
-        }
+    // window.addEventListener('keyup', pidgeotmove)
+    // function pidgeotmove(comand){
+    //     if(comand.key === 's'){
+    //         console.log('move down!')
+    //             smallPidgeY ++;}
+    //     if(comand.key === 'w'){
+    //         console.log('move up!')
+    //             smallPidgeY --;}
+    //     if(comand.key === 'd'){
+    //         console.log('move right!')
+    //             smallPidgeX ++;}
+    //     if(comand.key === 'a'){
+    //         console.log('move down!')
+    //             smallPidgeX --;}
+    //     }
     //ピカチューの描写
     let smallPikachuX = 500;
     let smallPikachuY = 140;
@@ -597,6 +626,7 @@ function drawMap(){
         con.clearRect(0,0,640,300)
         PidgeotCome();
         countclickcanvas = 0;
+        window.alert('下の四角の領域をクリックしてね！')
     }
 },100)
 }
